@@ -61,6 +61,9 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
+  // Skip non-HTTP/HTTPS requests (like chrome-extension, data URLs, etc.)
+  if (!request.url.startsWith('http://') && !request.url.startsWith('https://')) return;
+
   // Navigation requests (HTML pages): Network-first with cache fallback
   if (request.mode === 'navigate') {
     event.respondWith(

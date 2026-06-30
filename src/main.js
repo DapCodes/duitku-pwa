@@ -158,6 +158,34 @@ const initApp = async () => {
     });
   });
 
+  // Setup PWA install banner listeners
+  const installBtn = document.getElementById('pwa-install-btn');
+  const dismissBtn = document.getElementById('pwa-install-dismiss');
+  
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      const accepted = await triggerInstall();
+      if (accepted) {
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) {
+          banner.classList.add('hidden');
+          banner.classList.remove('flex');
+        }
+      }
+    });
+  }
+  
+  if (dismissBtn) {
+    dismissBtn.addEventListener('click', () => {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) {
+        banner.classList.add('hidden');
+        banner.classList.remove('flex');
+      }
+      sessionStorage.setItem('pwa-install-dismissed', 'true');
+    });
+  }
+
   // Check if user exists
   const user = await get(stores.USERS, 'me');
   if (user) {
