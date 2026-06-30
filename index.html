@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#f7f9fb" id="meta-theme-color" />
+  <title>Duitku</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="apple-touch-icon" href="/assets/logo.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="font-sans antialiased overflow-hidden w-screen h-screen relative transition-colors duration-300">
+
+  <!-- APP CONTAINER -->
+  <main id="app-container" class="w-full h-full relative overflow-y-auto overflow-x-hidden no-scrollbar pb-24"></main>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav id="bottom-nav" class="fixed bottom-0 left-0 w-full px-6 py-4 z-40 transition-transform duration-300 translate-y-full">
+    <div class="clay-surface-sm flex justify-between items-center px-6 py-3 mx-auto max-w-md backdrop-blur-md bg-white/70 dark:bg-[#202427]/70">
+      <button data-nav="home" class="nav-btn flex flex-col items-center gap-1 text-outline hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[24px]">home</span>
+        <span class="text-[10px] font-semibold">Beranda</span>
+      </button>
+      <button data-nav="timeline" class="nav-btn flex flex-col items-center gap-1 text-outline hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[24px]">history</span>
+        <span class="text-[10px] font-semibold">Aktivitas</span>
+      </button>
+      <button data-nav="transaction" class="nav-btn relative -top-6 w-14 h-14 rounded-full flex items-center justify-center clay-button">
+        <span class="material-symbols-outlined text-[32px]" style="color: #2d3436;">add</span>
+      </button>
+      <button data-nav="goals" class="nav-btn flex flex-col items-center gap-1 text-outline hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[24px]">target</span>
+        <span class="text-[10px] font-semibold">Target</span>
+      </button>
+      <button data-nav="reports" class="nav-btn flex flex-col items-center gap-1 text-outline hover:text-primary transition-colors">
+        <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+        <span class="text-[10px] font-semibold">Laporan</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 clay-surface-sm px-6 py-3 flex items-center gap-3 opacity-0 pointer-events-none transition-opacity duration-300">
+    <span id="toast-icon" class="material-symbols-outlined text-primary">check_circle</span>
+    <span id="toast-msg" class="text-sm font-semibold">Berhasil disimpan</span>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
