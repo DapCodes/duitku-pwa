@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Duitku - Catatan Keuangan",
-  "short_name": "Duitku",
+  "name": "UangKemana - Catatan Keuangan",
+  "short_name": "UangKemana",
   "description": "Catatan keuangan pribadi yang menyenangkan dengan gaya claymorphism",
   "start_url": "/",
   "scope": "/",
@@ -9,7 +9,7 @@
   "orientation": "portrait",
   "background_color": "#f0f4f8",
   "theme_color": "#f0f4f8",
-  "categories": ["finance", "utilities"],
+  "categories": ["utilities"],
   "icons": [
     {
       "src": "/assets/logo.png",

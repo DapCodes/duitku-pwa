@@ -9,7 +9,7 @@ export const onboardingView = {
         <div class="w-full max-w-md mx-auto px-6 pt-6 pb-2 flex items-center justify-between shrink-0">
           <div class="flex items-center gap-2.5">
             <img src="/assets/logo.png" class="w-6 h-6 object-contain rounded-lg shadow-sm" />
-            <span class="text-sm font-bold text-on-surface tracking-tight">Duitku</span>
+            <span class="text-sm font-bold text-on-surface tracking-tight">UangKemana</span>
           </div>
           <button id="ob-skip" class="text-xs font-semibold text-on-surface-variant hover:text-primary transition-colors px-3 py-1.5 rounded-xl"
                   style="background: rgba(0,0,0,0.04);">
@@ -28,7 +28,7 @@ export const onboardingView = {
               <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 h-48 rounded-full -z-10"
                    style="background: var(--color-primary); opacity: 0.15; filter: blur(40px);"></div>
               <!-- Mascot image sitting flush on the card below -->
-              <img src="/assets/mascout.png" class="w-64 h-64 object-contain drop-shadow-xl relative z-10 -mb-1" alt="Maskot Duitku" loading="eager" />
+              <img src="/assets/mascout.png" class="w-64 h-64 object-contain drop-shadow-xl relative z-10 -mb-1" alt="Maskot UangKemana" loading="eager" />
             </div>
             <!-- Text Card -->
             <div class="shrink-0 clay-surface-sm bg-surface-container-lowest/90 p-6 mb-2 relative z-20">
@@ -36,7 +36,7 @@ export const onboardingView = {
                 Halo! 👋 <span class="text-primary">Selamat Datang</span>
               </h2>
               <p class="text-sm text-on-surface-variant leading-relaxed">
-                Ini adalah <b class="text-primary">Duitku</b>. Teman barumu untuk mengelola keuangan dengan mudah dan menyenangkan.
+                Ini adalah <b class="text-primary">UangKemana</b>. Teman barumu untuk mengelola keuangan dengan mudah dan menyenangkan.
               </p>
             </div>
           </div>
