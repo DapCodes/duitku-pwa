@@ -1,4 +1,4 @@
-import { get, getAll, put, clear, stores } from '../db.js';
+import { get, getAll, put, clear, stores, clearBackup, forceBackup } from '../db.js';
 import { showToast } from '../utils.js';
 
 export const settingsView = {
@@ -254,6 +254,9 @@ export const settingsView = {
             for (const t of data.transactions) await put(stores.TRANSACTIONS, t);
             for (const g of data.goals) await put(stores.SAVING_GOALS, g);
             
+            // Immediately backup imported data to localStorage
+            await forceBackup();
+            
             showToast('Data berhasil dipulihkan');
             setTimeout(async () => {
               const { navigate } = await import('../main.js');
@@ -309,6 +312,9 @@ export const settingsView = {
         await clear(stores.USERS);
         await clear(stores.TRANSACTIONS);
         await clear(stores.SAVING_GOALS);
+        
+        // Also clear the localStorage backup so data doesn't auto-restore
+        clearBackup();
         
         document.body.style.overflow = '';
         const appContainer = document.getElementById('app-container');

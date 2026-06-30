@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#f7f9fb" id="meta-theme-color" />
+  <meta name="theme-color" content="#f0f4f8" id="meta-theme-color" />
+  <meta name="description" content="Catatan keuangan pribadi yang menyenangkan dengan gaya claymorphism" />
+  
+  <!-- PWA Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Duitku" />
+  <meta name="application-name" content="Duitku" />
+  <meta name="msapplication-TileColor" content="#f0f4f8" />
+  
   <title>Duitku</title>
   <link rel="icon" type="image/png" href="/assets/logo.png" />
   <link rel="apple-touch-icon" href="/assets/logo.png" />
@@ -13,6 +23,23 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="font-sans antialiased overflow-hidden w-screen h-screen relative transition-colors duration-300">
+
+  <!-- PWA INSTALL BANNER -->
+  <div id="pwa-install-banner" class="hidden fixed top-0 left-0 right-0 z-[60] p-3 items-center justify-center gap-3 animate-slide-down">
+    <div class="w-full max-w-md mx-auto bg-white/90 dark:bg-[#202427]/90 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-3 shadow-lg border border-primary/10" style="box-shadow: 6px 6px 12px #d1d9e6, -6px -6px 12px #ffffff;">
+      <img src="/assets/logo.png" alt="Duitku" class="w-10 h-10 rounded-xl" />
+      <div class="flex-1 min-w-0">
+        <p class="font-bold text-sm text-on-surface truncate">Pasang Duitku</p>
+        <p class="text-[11px] text-on-surface-variant truncate">Tambahkan ke layar utama HP kamu</p>
+      </div>
+      <button id="pwa-install-btn" class="shrink-0 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold transition-all active:scale-95 shadow-md shadow-primary/30">
+        Pasang
+      </button>
+      <button id="pwa-install-dismiss" class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-outline hover:bg-surface-variant transition-colors">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+  </div>
 
   <!-- APP CONTAINER -->
   <main id="app-container" class="w-full h-full relative overflow-y-auto overflow-x-hidden no-scrollbar pb-24"></main>
@@ -51,3 +78,4 @@
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
+

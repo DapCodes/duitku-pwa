@@ -24,6 +24,51 @@ const routes = {
 
 let currentRoute = null;
 
+// ──────────────────────────────────────────────
+// PWA Install Prompt
+// Store the deferred prompt so the user can install from within the app
+// ──────────────────────────────────────────────
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  
+  // Show install banner if it exists and hasn't been dismissed in this session
+  if (sessionStorage.getItem('pwa-install-dismissed') !== 'true') {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) {
+      banner.classList.remove('hidden');
+      banner.classList.add('flex');
+    }
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  const banner = document.getElementById('pwa-install-banner');
+  if (banner) {
+    banner.classList.add('hidden');
+    banner.classList.remove('flex');
+  }
+  console.log('[PWA] App installed successfully');
+});
+
+// Export for use in views
+export const triggerInstall = async () => {
+  if (!deferredInstallPrompt) return false;
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  return outcome === 'accepted';
+};
+
+export const canInstall = () => deferredInstallPrompt !== null;
+
+// ──────────────────────────────────────────────
+// Navigation
+// ──────────────────────────────────────────────
+
 export const navigate = async (path, params = {}) => {
   if (currentRoute === path) return;
   
@@ -76,9 +121,32 @@ export const navigate = async (path, params = {}) => {
   }
 };
 
+// ──────────────────────────────────────────────
+// App Initialization
+// ──────────────────────────────────────────────
+
 const initApp = async () => {
+  // Register Service Worker for PWA
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').catch(err => console.log('SW registration failed: ', err));
+    try {
+      const registration = await navigator.serviceWorker.register('/service-worker.js', {
+        scope: '/'
+      });
+      
+      // Handle SW updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'activated') {
+            console.log('[SW] New version activated');
+          }
+        });
+      });
+      
+      console.log('[SW] Registered successfully, scope:', registration.scope);
+    } catch (err) {
+      console.warn('[SW] Registration failed:', err);
+    }
   }
 
   await initDB();
