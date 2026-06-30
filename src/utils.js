@@ -7,19 +7,59 @@ export const showToast = (message, type = 'success') => {
   
   if (type === 'success') {
     iconEl.textContent = 'check_circle';
-    iconEl.className = 'material-symbols-outlined text-primary';
+    iconEl.className = 'material-symbols-outlined text-primary text-[20px]';
   } else if (type === 'error') {
     iconEl.textContent = 'error';
-    iconEl.className = 'material-symbols-outlined text-error';
+    iconEl.className = 'material-symbols-outlined text-error text-[20px]';
   }
 
-  toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
+  toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
   toast.classList.add('opacity-100', 'translate-y-0');
 
   setTimeout(() => {
     toast.classList.remove('opacity-100', 'translate-y-0');
-    toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+    toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
   }, 3000);
+};
+
+export const compressImage = (file, maxWidth = 256, maxHeight = 256, quality = 0.7) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Compress and convert to Base64 JPEG data URL
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
 };
 
 export const formatRupiah = (number) => {

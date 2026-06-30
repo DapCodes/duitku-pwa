@@ -4,7 +4,7 @@ import { formatRupiah, showToast } from '../utils.js';
 export const goalDetailView = {
   render: () => `
     <div class="w-full min-h-full flex flex-col bg-surface-bright pb-32">
-      <div class="px-6 pt-6 pb-3 sticky top-0 z-30">
+      <div class="px-6 pt-6 pb-3 sticky top-0 z-50">
         <div class="clay-surface bg-surface-bright/90 backdrop-blur-md rounded-[32px] px-4 py-4 flex items-center gap-4 h-20">
           <button id="btn-back-goal" class="w-10 h-10 shrink-0 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant transition-transform active:scale-95">
             <span class="material-symbols-outlined">arrow_back</span>

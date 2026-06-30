@@ -4,7 +4,7 @@ import { formatRupiah } from '../utils.js';
 export const reportsView = {
   render: () => `
     <div class="w-full min-h-full flex flex-col bg-surface-bright pb-32">
-      <div class="px-6 pt-6 pb-3 sticky top-0 z-30">
+      <div class="px-6 pt-6 pb-3 sticky top-0 z-50">
         <div class="clay-surface bg-surface-bright/90 backdrop-blur-md rounded-[32px] px-6 py-4 flex flex-col justify-center h-20">
           <h1 class="font-headline-lg text-on-surface">Laporan</h1>
           <p class="font-body-sm text-on-surface-variant truncate">Analisis pengeluaran dan pemasukanmu.</p>

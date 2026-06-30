@@ -4,7 +4,7 @@ import { formatRupiah, showToast } from '../utils.js';
 export const goalsView = {
   render: () => `
     <div class="w-full min-h-full flex flex-col bg-surface-bright pb-32">
-      <div class="px-6 pt-6 pb-3 sticky top-0 z-30">
+      <div class="px-6 pt-6 pb-3 sticky top-0 z-50">
         <div class="clay-surface bg-surface-bright/90 backdrop-blur-md rounded-[32px] px-6 py-4 flex justify-between items-center h-20">
           <div class="overflow-hidden">
             <h1 class="font-headline-lg text-on-surface truncate">Target Tabungan</h1>

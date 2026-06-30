@@ -1,10 +1,10 @@
 import { put, get, stores } from '../db.js';
-import { showToast, playSound, createConfetti } from '../utils.js';
+import { showToast, playSound, createConfetti, compressImage } from '../utils.js';
 
 export const transactionView = {
   render: () => `
     <div class="w-full min-h-full flex flex-col bg-surface-bright pb-32">
-      <div class="px-6 pt-6 pb-3 sticky top-0 z-30">
+      <div class="px-6 pt-6 pb-3 sticky top-0 z-50">
         <div class="clay-surface bg-surface-bright/90 backdrop-blur-md rounded-[32px] px-6 py-4 flex items-center justify-between h-20">
           <h1 class="font-headline-lg text-on-surface truncate">Catat Transaksi</h1>
           <button id="tx-close" class="w-10 h-10 shrink-0 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant transition-transform active:scale-90">
@@ -185,16 +185,18 @@ export const transactionView = {
     amountInput.addEventListener('input', validate);
     dateInput.addEventListener('input', validate);
 
-    photoInput.addEventListener('change', (e) => {
+    photoInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          photoDataUrl = ev.target.result;
+        try {
+          const compressed = await compressImage(file, 400, 400, 0.7);
+          photoDataUrl = compressed;
           photoPreview.src = photoDataUrl;
           photoPreview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
+        } catch (err) {
+          console.error('[Transaction] Photo processing failed:', err);
+          showToast('Gagal memproses foto bukti', 'error');
+        }
       }
     });
 

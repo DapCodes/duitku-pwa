@@ -1,10 +1,10 @@
 import { get, getAll, put, clear, stores, clearBackup, forceBackup } from '../db.js';
-import { showToast } from '../utils.js';
+import { showToast, compressImage } from '../utils.js';
 
 export const settingsView = {
   render: () => `
     <div class="w-full min-h-full flex flex-col bg-surface-bright pb-32">
-      <div class="px-6 pt-6 pb-3 sticky top-0 z-30">
+      <div class="px-6 pt-6 pb-3 sticky top-0 z-50">
         <div class="clay-surface bg-surface-bright/90 backdrop-blur-md rounded-[32px] px-4 py-4 flex items-center gap-4 h-20">
           <button id="btn-back" class="w-10 h-10 shrink-0 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant transition-transform active:scale-95">
             <span class="material-symbols-outlined">arrow_back</span>
@@ -98,7 +98,7 @@ export const settingsView = {
       </div>
 
       <!-- Reset Data Modal -->
-      <div id="reset-modal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm items-center justify-center px-6 transition-opacity duration-300">
+      <div id="reset-modal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center px-6 transition-opacity duration-300">
         <div class="bg-surface-bright rounded-3xl p-6 w-full max-w-sm shadow-xl flex flex-col gap-4">
           <div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center text-error mx-auto mb-2">
             <span class="material-symbols-outlined text-[28px]">warning</span>
@@ -182,18 +182,20 @@ export const settingsView = {
       validateProfile();
     });
     
-    photoInput.addEventListener('change', (e) => {
+    photoInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          currentPhoto = ev.target.result;
+        try {
+          const compressed = await compressImage(file, 256, 256, 0.7);
+          currentPhoto = compressed;
           photoPreview.src = currentPhoto;
           photoPreview.classList.remove('hidden');
           photoIcon.classList.add('hidden');
           validateProfile();
-        };
-        reader.readAsDataURL(file);
+        } catch (err) {
+          console.error('[Settings] Image compression failed:', err);
+          showToast('Gagal memproses foto', 'error');
+        }
       }
     });
     
