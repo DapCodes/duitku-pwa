@@ -105,6 +105,14 @@ export const timelineView = {
       });
       
       list.innerHTML = html;
+
+      // Stagger animate each timeline item
+      const items = list.querySelectorAll('.tx-item, .tx-item + div, [class*="mt-6"]');
+      items.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.animation = `slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards`;
+        el.style.animationDelay = `${Math.min(i * 0.06, 0.5)}s`;
+      });
     }
 
     // Double click to like

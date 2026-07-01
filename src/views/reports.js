@@ -11,9 +11,9 @@ export const reportsView = {
         </div>
       </div>
 
-      <div class="px-6 flex flex-col gap-6 pt-0">
+      <div class="px-6 flex flex-col gap-6 pt-0 stagger-container">
         <!-- Wrap Recap -->
-        <div class="clay-surface p-6 relative overflow-hidden">
+        <div class="clay-surface p-6 relative overflow-hidden stagger-1">
           <div class="absolute -top-10 -right-10 w-32 h-32 bg-secondary-container opacity-20 rounded-full"></div>
           <h2 class="font-headline-lg-mobile relative z-10 mb-4 text-on-surface">Ringkasan Bulan Ini</h2>
           
@@ -39,7 +39,7 @@ export const reportsView = {
         </div>
 
         <!-- Insight -->
-        <div class="clay-surface p-5 border-l-4 border-tertiary">
+        <div class="clay-surface p-5 border-l-4 border-tertiary stagger-2">
           <div class="flex gap-3">
             <span class="material-symbols-outlined text-tertiary">stars</span>
             <div>
@@ -50,7 +50,7 @@ export const reportsView = {
         </div>
 
         <!-- Chart -->
-        <div class="clay-surface p-6">
+        <div class="clay-surface p-6 stagger-3">
           <h3 class="font-title-md text-on-surface mb-4">Grafik Pengeluaran</h3>
           <div class="relative w-full h-64">
             <canvas id="expenseChart"></canvas>
@@ -58,7 +58,7 @@ export const reportsView = {
         </div>
         
         <!-- Statistik -->
-        <div class="clay-surface p-6">
+        <div class="clay-surface p-6 stagger-4">
           <h3 class="font-title-md text-on-surface mb-4">Statistik Tambahan</h3>
           <div class="flex flex-col gap-4">
             <div class="flex justify-between items-center">
@@ -81,6 +81,21 @@ export const reportsView = {
     </div>
   `,
   init: async () => {
+    // Count-up animation helper
+    const animateCountUp = (el, target, duration = 1000) => {
+      const start = 0;
+      const startTime = performance.now();
+      const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const step = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.round(start + (target - start) * ease(progress));
+        el.textContent = formatRupiah(value);
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
     const txs = await getAll(stores.TRANSACTIONS);
     
     let totalIn = 0;
@@ -97,8 +112,9 @@ export const reportsView = {
       }
     });
 
-    document.getElementById('rep-total-in').textContent = formatRupiah(totalIn);
-    document.getElementById('rep-total-out').textContent = formatRupiah(totalOut);
+    // Animate count-up for totals
+    animateCountUp(document.getElementById('rep-total-in'), totalIn);
+    animateCountUp(document.getElementById('rep-total-out'), totalOut);
 
     let maxCat = '-';
     let maxAmt = 0;
@@ -120,8 +136,8 @@ export const reportsView = {
     });
     const avgDay = daysWithTx.size > 0 ? totalOut / daysWithTx.size : 0;
     
-    document.getElementById('rep-avg-day').textContent = formatRupiah(avgDay);
-    document.getElementById('rep-max-tx').textContent = formatRupiah(maxTx);
+    animateCountUp(document.getElementById('rep-avg-day'), avgDay);
+    animateCountUp(document.getElementById('rep-max-tx'), maxTx);
     document.getElementById('rep-total-freq').textContent = txs.length.toString();
 
     // Insight

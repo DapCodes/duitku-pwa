@@ -117,20 +117,185 @@
   }
 
   .page-enter {
-    animation: fadeScaleIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation: fadeScaleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .page-exit {
-    animation: fadeScaleOut 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation: fadeScaleOut 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Transition Containers & Classes */
+  .transition-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .transition-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Slide Left (Forward Navigation) */
+  .slide-left-enter {
+    animation: slideLeftEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 20;
+  }
+  .slide-left-exit {
+    animation: slideLeftExit 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 10;
+  }
+
+  /* Slide Right (Backward Navigation) */
+  .slide-right-enter {
+    animation: slideRightEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 10;
+  }
+  .slide-right-exit {
+    animation: slideRightExit 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 20;
+  }
+
+  /* Slide Up (Modal Enter) */
+  .slide-up-enter {
+    animation: slideUpEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 30;
+  }
+  .slide-up-exit {
+    animation: slideUpExit 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 10;
+  }
+
+  /* Slide Down (Modal Exit) */
+  .slide-down-enter {
+    animation: slideDownEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 10;
+  }
+  .slide-down-exit {
+    animation: slideDownExit 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 30;
+  }
+
+  /* Fade Scale (Fallback / Standard) */
+  .fade-scale-enter {
+    animation: fadeScaleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 15;
+  }
+  .fade-scale-exit {
+    animation: fadeScaleOut 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 5;
   }
 }
 
 @keyframes fadeScaleIn {
-  from { opacity: 0; transform: scale(0.95) translateY(15px); }
+  from { opacity: 0; transform: scale(0.97) translateY(10px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 @keyframes fadeScaleOut {
   from { opacity: 1; transform: scale(1) translateY(0); }
-  to { opacity: 0; transform: scale(1.05) translateY(-15px); }
+  to { opacity: 0; transform: scale(1.03) translateY(-10px); }
+}
+
+@keyframes slideLeftEnter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slideLeftExit {
+  from { transform: translateX(0); opacity: 1; filter: brightness(1); }
+  to { transform: translateX(-20%); opacity: 0.8; filter: brightness(0.9); }
+}
+
+@keyframes slideRightEnter {
+  from { transform: translateX(-20%); opacity: 0.8; filter: brightness(0.9); }
+  to { transform: translateX(0); opacity: 1; filter: brightness(1); }
+}
+@keyframes slideRightExit {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes slideUpEnter {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes slideUpExit {
+  from { transform: translateY(0); opacity: 1; filter: scale(1); }
+  to { transform: translateY(-10%); opacity: 0.9; filter: scale(0.95); }
+}
+
+@keyframes slideDownEnter {
+  from { transform: translateY(-10%); opacity: 0.9; filter: scale(0.95); }
+  to { transform: translateY(0); opacity: 1; filter: scale(1); }
+}
+@keyframes slideDownExit {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+/* Staggered Animations */
+.stagger-container > * {
+  opacity: 0;
+}
+.stagger-1 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.05s; }
+.stagger-2 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.1s; }
+.stagger-3 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.15s; }
+.stagger-4 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.2s; }
+.stagger-5 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.25s; }
+.stagger-6 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.30s; }
+.stagger-7 { animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0.35s; }
+
+/* Premium Card Shine effect */
+@keyframes shine {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  30% { transform: translateX(150%) skewX(-15deg); }
+  100% { transform: translateX(150%) skewX(-15deg); }
+}
+.animate-shine {
+  animation: shine 4s infinite ease-in-out;
+}
+
+/* Wiggle animation for interactive buttons */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+.hover-wiggle:hover {
+  animation: wiggle 0.3s ease-in-out;
+}
+
+/* Bounce short animation for tab items */
+@keyframes bounceShort {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.animate-bounce-short {
+  animation: bounceShort 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Neon Glow Cards */
+.glow-primary {
+  box-shadow: 0 10px 30px -10px rgba(108, 92, 231, 0.3), 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+.glow-secondary {
+  box-shadow: 0 10px 30px -10px rgba(0, 184, 148, 0.3), 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+.glow-tertiary {
+  box-shadow: 0 10px 30px -10px rgba(253, 203, 110, 0.3), 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+.glow-error {
+  box-shadow: 0 10px 30px -10px rgba(214, 48, 49, 0.3), 12px 12px 24px #d1d9e6, -12px -12px 24px #ffffff;
+}
+
+/* Pulse Glow border for special states */
+@keyframes breathing-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(108, 92, 231, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.45); }
+}
+.animate-glow-pulse {
+  animation: breathing-glow 3s infinite ease-in-out;
 }
 @keyframes float {
   0% { transform: translateY(0px) rotate(0deg); }
