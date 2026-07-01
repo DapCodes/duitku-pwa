@@ -21,8 +21,8 @@ export const goalsView = {
       </div>
 
       <!-- Add Goal Modal -->
-      <div id="goal-modal" class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity">
-        <div class="bg-surface-bright w-full sm:w-[400px] rounded-t-[2rem] sm:rounded-[2rem] p-6 flex flex-col gap-4 transform translate-y-full sm:translate-y-10 transition-transform" id="goal-modal-content">
+      <div id="goal-modal" class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-[60] flex items-end sm:items-center justify-center opacity-0 pointer-events-none transition-opacity">
+        <div class="bg-surface-bright w-full sm:w-[400px] rounded-t-[2rem] sm:rounded-[2rem] p-6 pb-28 sm:pb-6 flex flex-col gap-4 transform translate-y-full sm:translate-y-10 transition-transform" id="goal-modal-content">
           <div class="flex justify-between items-center mb-2">
             <h2 class="font-headline-lg-mobile text-on-surface">Nabung Buat Apa?</h2>
             <button id="close-goal-modal" class="text-outline"><span class="material-symbols-outlined">close</span></button>
@@ -54,7 +54,7 @@ export const goalsView = {
     const btnAdd = document.getElementById('add-goal-btn');
     const btnClose = document.getElementById('close-goal-modal');
     const btnSave = document.getElementById('save-goal');
-    
+
     const inputName = document.getElementById('goal-name');
     const inputTarget = document.getElementById('goal-target');
     const inputCurrent = document.getElementById('goal-current');
@@ -98,11 +98,11 @@ export const goalsView = {
           </div>
         `;
       }).join('');
-      
+
       document.querySelectorAll('.goal-item').forEach(el => {
         el.addEventListener('click', async () => {
-           const { navigate } = await import('../main.js');
-           navigate('goalDetail', { id: el.dataset.id });
+          const { navigate } = await import('../main.js');
+          navigate('goalDetail', { id: el.dataset.id });
         });
       });
     };
@@ -140,7 +140,7 @@ export const goalsView = {
 
     btnClose.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
-      if(e.target === modal) closeModal();
+      if (e.target === modal) closeModal();
     });
 
     btnSave.addEventListener('click', async () => {
@@ -161,4 +161,3 @@ export const goalsView = {
     loadGoals();
   }
 };
-
